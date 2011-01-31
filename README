@@ -1,0 +1,14 @@
+Adds filtering by ranges of dates in the admin filter sidebar.
+
+Example:
+
+from django.db import models
+import datefilterspec
+ 
+class Person(models.Model):
+    date = models.DateTimeField(default=datetime.datetime.now)
+    date.date_filter = True
+
+    class Admin:
+        list_filter = ['date']
+
