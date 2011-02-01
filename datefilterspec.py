@@ -1,7 +1,7 @@
 """
 Adds filtering by ranges of dates in the admin filter sidebar.
 
-git://github.com/coolchevy/django-datefilterspec.git
+https://github.com/coolchevy/django-datefilterspec
 
 Example:
 
