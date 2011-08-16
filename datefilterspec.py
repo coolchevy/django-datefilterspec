@@ -31,11 +31,12 @@ from django.contrib.admin.widgets import AdminDateWidget
 
 
 class DateForm(forms.Form):
-    date__gte = forms.DateField(label=(_('From')),widget=AdminDateWidget,required=False)
-    date__lte = forms.DateField(label=_('To'),widget=AdminDateWidget,required=False)
 
     def __init__(self, *args, **kwargs):
+        field_name = kwargs.pop('field_name')
         super(DateForm, self).__init__(*args, **kwargs)
+        self.fields['%s__gte' % field_name ] = forms.DateField(label=(_('From')),widget=AdminDateWidget,required=False)
+        self.fields['%s__lte' % field_name ] = forms.DateField(label=(_('To')),widget=AdminDateWidget,required=False)
         for k in kwargs.get('initial',{}):
             if not self.fields.has_key(k):
                 self.fields[k] = forms.CharField(widget=forms.HiddenInput())
@@ -43,8 +44,6 @@ class DateForm(forms.Form):
 
 
 class DateFilterSpec(DateFieldFilterSpec):
-    """
-    """
 
     def __init__(self, f, request, params, model, model_admin):
         super(DateFilterSpec, self).__init__(f, request, params, model,
@@ -53,7 +52,7 @@ class DateFilterSpec(DateFieldFilterSpec):
 
     def title(self):
         title = super(DateFilterSpec, self).title()
-        form = DateForm(initial=self.params)
+        form = DateForm(initial=self.params, field_name=self.field.name)
         out =  u"""
         <style>
             .calendarbox {
