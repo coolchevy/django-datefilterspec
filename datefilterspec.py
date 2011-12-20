@@ -45,9 +45,9 @@ class DateForm(forms.Form):
 
 class DateFilterSpec(DateFieldFilterSpec):
 
-    def __init__(self, f, request, params, model, model_admin):
+    def __init__(self, f, request, params, model, model_admin, field_path=None):
         super(DateFilterSpec, self).__init__(f, request, params, model,
-                                                   model_admin)
+                                                   model_admin,field_path=field_path)
         self.field_generic = '%s__' % self.field.name
 
     def title(self):
